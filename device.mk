@@ -81,53 +81,49 @@ PRODUCT_SHIPPING_API_LEVEL := 28
 
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
+# Ramdisk
+PRODUCT_PACKAGES += \
+    fstab.hardware \
+    fstab.persist \
+    ueventd.hardware.rc \
+    init.blueline.rc \
+    init.crosshatch.rc \
+    init.recovery.hardware.rc \
+    init.recovery.hardware.device.rc \
+    init.hardware.rc \
+    init.hardware.usb.rc \
+    init.logging.rc \
+    init.power.rc \
+    init.edge_sense.sh \
+    init.fingerprint.sh \
+    init.qcom.devstart.sh \
+    init.qcom.ipastart.sh \
+    init.radio.sh \
+    init.ramoops.sh \
+    init.firstboot.sh \
+    init.insmod.sh \
+    init.insmod.device.cfg
+
+ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
+    PRODUCT_PACKAGES += \
+        init.hardware.diag.rc.userdebug \
+        init.hardware.mpssrfs.rc.userdebug \
+        init.hardware.chamber.rc.userdebug \
+        init.hardware.wlc.rc.userdebug
+else
+    PRODUCT_PACKAGES += \
+        init.hardware.diag.rc.user \
+        init.hardware.mpssrfs.rc.user
+endif
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
-    $(LOCAL_PATH)/init.recovery.hardware.rc:recovery/root/init.recovery.$(PRODUCT_PLATFORM).rc \
-    $(LOCAL_PATH)/init.hardware.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_PLATFORM).rc \
-    $(LOCAL_PATH)/init.hardware.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_PLATFORM).usb.rc \
-    $(LOCAL_PATH)/ueventd.hardware.rc:$(TARGET_COPY_OUT_VENDOR)/ueventd.rc \
-    $(LOCAL_PATH)/init.power.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_PLATFORM).power.rc \
-    $(LOCAL_PATH)/init.radio.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.radio.sh \
     $(LOCAL_PATH)/uinput-fpc.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-fpc.kl \
     $(LOCAL_PATH)/uinput-fpc.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/uinput-fpc.idc \
-    $(LOCAL_PATH)/init.qcom.devstart.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qcom.devstart.sh \
-    $(LOCAL_PATH)/init.qcom.ipastart.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.qcom.ipastart.sh \
-    $(LOCAL_PATH)/init.insmod.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.insmod.sh \
-    $(LOCAL_PATH)/init.firstboot.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.firstboot.sh \
     $(LOCAL_PATH)/thermal-engine-$(PRODUCT_HARDWARE)-novr-evt.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-$(PRODUCT_HARDWARE)-novr-evt.conf \
     $(LOCAL_PATH)/thermal-engine-$(PRODUCT_HARDWARE)-vr-evt.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-$(PRODUCT_HARDWARE)-vr-evt.conf \
     $(LOCAL_PATH)/thermal-engine-$(PRODUCT_HARDWARE)-novr-prod.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-$(PRODUCT_HARDWARE)-novr-prod.conf \
-    $(LOCAL_PATH)/thermal-engine-$(PRODUCT_HARDWARE)-vr-prod.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-$(PRODUCT_HARDWARE)-vr-prod.conf \
-    $(LOCAL_PATH)/init.ramoops.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.ramoops.sh
-
-# Edge Sense initialization script.
-# TODO: b/67205273
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/init.edge_sense.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.edge_sense.sh
-
-ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
-  PRODUCT_COPY_FILES += \
-      $(LOCAL_PATH)/init.hardware.diag.rc.userdebug:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_PLATFORM).diag.rc
-  PRODUCT_COPY_FILES += \
-      $(LOCAL_PATH)/init.hardware.mpssrfs.rc.userdebug:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_PLATFORM).mpssrfs.rc
-  PRODUCT_COPY_FILES += \
-      $(LOCAL_PATH)/init.hardware.chamber.rc.userdebug:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.$(PRODUCT_PLATFORM).chamber.rc
-  PRODUCT_COPY_FILES += \
-      $(LOCAL_PATH)/init.hardware.wlc.rc.userdebug:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.$(PRODUCT_PLATFORM).wlc.rc
-else
-  PRODUCT_COPY_FILES += \
-      $(LOCAL_PATH)/init.hardware.diag.rc.user:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_PLATFORM).diag.rc
-  PRODUCT_COPY_FILES += \
-      $(LOCAL_PATH)/init.hardware.mpssrfs.rc.user:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_PLATFORM).mpssrfs.rc
-endif
-
-#per device
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/crosshatch/init.crosshatch.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.crosshatch.rc \
-    $(LOCAL_PATH)/blueline/init.blueline.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.blueline.rc \
-    $(LOCAL_PATH)/init.recovery.hardware.device.rc:recovery/root/init.recovery.crosshatch.rc \
-    $(LOCAL_PATH)/init.recovery.hardware.device.rc:recovery/root/init.recovery.blueline.rc \
+    $(LOCAL_PATH)/thermal-engine-$(PRODUCT_HARDWARE)-vr-prod.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-$(PRODUCT_HARDWARE)-vr-prod.conf
 
 MSM_VIDC_TARGET_LIST := sdm845 # Get the color format from kernel headers
 MASTER_SIDE_CP_TARGET_LIST := sdm845 # ION specific settings
@@ -626,19 +622,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # setup dalvik vm configs
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
 
-ifneq ($(filter %_mainline,$(TARGET_PRODUCT)),)
-PRODUCT_COPY_FILES += \
-    device/google/crosshatch/fstab.mainline.hardware:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.$(PRODUCT_PLATFORM) \
-    device/google/crosshatch/fstab.mainline.hardware:$(TARGET_COPY_OUT_RECOVERY)/root/first_stage_ramdisk/fstab.$(PRODUCT_PLATFORM)
-else
-PRODUCT_COPY_FILES += \
-    device/google/crosshatch/fstab.hardware:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.$(PRODUCT_PLATFORM) \
-    device/google/crosshatch/fstab.hardware:$(TARGET_COPY_OUT_RECOVERY)/root/first_stage_ramdisk/fstab.$(PRODUCT_PLATFORM)
-endif
-
-PRODUCT_COPY_FILES += \
-    device/google/crosshatch/fstab.persist:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.persist
-
 # Use the default charger mode images
 PRODUCT_PACKAGES += \
     charger_res_images
@@ -704,8 +687,6 @@ PRODUCT_PACKAGES += \
 # Fingerprint
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.fpc
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/init.fingerprint.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.fingerprint.sh \
 
 # Reliability reporting
 PRODUCT_PACKAGES += \

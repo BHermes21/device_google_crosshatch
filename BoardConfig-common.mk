@@ -66,9 +66,9 @@ BOARD_USES_METADATA_PARTITION := true
 # Partitions (listed in the file) to be wiped under recovery.
 TARGET_RECOVERY_WIPE := device/google/crosshatch/recovery.wipe
 ifneq ($(filter %_mainline,$(TARGET_PRODUCT)),)
-TARGET_RECOVERY_FSTAB := device/google/crosshatch/fstab.mainline.hardware
+TARGET_RECOVERY_FSTAB := device/google/crosshatch/rootdir/fstab.mainline.hardware
 else
-TARGET_RECOVERY_FSTAB := device/google/crosshatch/fstab.hardware
+TARGET_RECOVERY_FSTAB := device/google/crosshatch/rootdir/fstab.hardware
 endif
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_RECOVERY_UI_LIB := \
