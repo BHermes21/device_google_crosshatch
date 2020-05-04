@@ -73,14 +73,6 @@ LOCAL_MODULE_PATH   := $(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_PLAT
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE        := init.hardware.usb.rc
-LOCAL_MODULE_TAGS   := optional
-LOCAL_MODULE_CLASS  := ETC
-LOCAL_SRC_FILES     := init.hardware.usb.rc
-LOCAL_MODULE_PATH   := $(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_PLATFORM).usb.rc
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE        := init.logging.rc
 LOCAL_MODULE_TAGS   := optional
 LOCAL_MODULE_CLASS  := ETC
@@ -102,14 +94,6 @@ LOCAL_MODULE_TAGS   := optional
 LOCAL_MODULE_CLASS  := ETC
 LOCAL_SRC_FILES     := init.edge_sense.sh
 LOCAL_MODULE_PATH   := $(TARGET_COPY_OUT_VENDOR)/bin/init.edge_sense.sh
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE        := init.fingerprint.sh
-LOCAL_MODULE_TAGS   := optional
-LOCAL_MODULE_CLASS  := ETC
-LOCAL_SRC_FILES     := init.fingerprint.sh
-LOCAL_MODULE_PATH   := $(TARGET_COPY_OUT_VENDOR)/bin/init.fingerprint.sh
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
@@ -156,7 +140,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE        := init.firstboot.sh
 LOCAL_MODULE_TAGS   := optional
 LOCAL_MODULE_CLASS  := ETC
-LOCAL_SRC_FILES     := init.firsboot.sh
+LOCAL_SRC_FILES     := init.firstboot.sh
 LOCAL_MODULE_PATH   := $(TARGET_COPY_OUT_VENDOR)/bin/init.firstboot.sh
 include $(BUILD_PREBUILT)
 

@@ -37,6 +37,7 @@ TARGET_2ND_CPU_VARIANT_RUNTIME := kryo385
 TARGET_BOARD_COMMON_PATH := device/google/crosshatch/sdm845
 
 BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_PHONY_TARGETS := true
 
 BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200n8 androidboot.console=ttyMSM0 printk.devkmsg=on
 BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237
@@ -326,4 +327,7 @@ endif
 
 # Testing related defines
 BOARD_PERFSETUP_SCRIPT := platform_testing/scripts/perf-setup/b1c1-setup.sh
+
+BOARD_KERNEL_IMAGE_NAME := Image.lz4
+
 -include vendor/google_devices/crosshatch/proprietary/BoardConfigVendor.mk
