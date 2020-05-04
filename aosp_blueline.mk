@@ -16,8 +16,12 @@
 
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/mainline.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
+# Inhert AOSP stuff
+$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+
+# Blueline inherits
 $(call inherit-product, device/google/crosshatch/device-blueline.mk)
 $(call inherit-product-if-exists, vendor/google_devices/crosshatch/proprietary/device-vendor.mk)
 
@@ -27,7 +31,20 @@ PRODUCT_COPY_FILES += $(LOCAL_PATH)/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/
 # PRODUCT_RESTRICT_VENDOR_FILES := all
 
 PRODUCT_MANUFACTURER := Google
-PRODUCT_BRAND := Android
+PRODUCT_BRAND := Google
 PRODUCT_NAME := aosp_blueline
 PRODUCT_DEVICE := blueline
-PRODUCT_MODEL := AOSP on blueline
+PRODUCT_MODEL := Pixel 3
+
+# Inherit Evolution-X product configuration
+TARGET_INCLUDE_STOCK_ARCORE := true
+TARGET_INCLUDE_WIFI_EXT := true
+TARGET_SUPPORTS_GOOGLE_RECORDER := true
+TARGET_BOOT_ANIMATION_RES := 1440
+TARGET_GAPPS_ARCH := arm64
+
+# Device props
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRODUCT_NAME=blueline \
+    BUILD_FINGERPRINT=google/blueline/blueline:10/QQ2A.200501.001.A3/6353761:user/release-keys \
+    PRIVATE_BUILD_DESC="blueline-user 10 QQ2A.200501.001.A3 6353761 release-keys"
