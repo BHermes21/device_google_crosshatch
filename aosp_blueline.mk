@@ -45,6 +45,11 @@ TARGET_INCLUDE_WIFI_EXT := true
 TARGET_BOOT_ANIMATION_RES := 1440
 TARGET_GAPPS_ARCH := arm64
 
+EVO_DONATE_URL := https://www.paypal.me/nysascape
+EVO_MAINTAINER := nysascape
+EVO_SUPPORT_URL := https://t.me/EvolutionXBluecross
+CUSTOM_BUILD_TYPE := OFFICIAL
+
 # Device props
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRODUCT_NAME=blueline \
