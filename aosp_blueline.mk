@@ -26,7 +26,6 @@ $(call inherit-product, vendor/google_extras/blueline/blueline-vendor.mk)
 
 # Blueline inherits
 $(call inherit-product, device/google/crosshatch/device-blueline.mk)
-$(call inherit-product-if-exists, vendor/google_devices/crosshatch/proprietary/device-vendor.mk)
 
 PRODUCT_COPY_FILES += $(LOCAL_PATH)/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml
 
