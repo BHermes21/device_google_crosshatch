@@ -292,3 +292,6 @@ TARGET_USES_MKE2FS := true
 
 # Testing related defines
 BOARD_PERFSETUP_SCRIPT := platform_testing/scripts/perf-setup/b1c1-setup.sh
+
+# Use AOSP surfaceflinger
+TARGET_USE_AOSP_SURFACEFLINGER := true
