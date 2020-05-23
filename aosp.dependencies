@@ -1,0 +1,18 @@
+{
+  {
+    "repository": "nysascape/vendor_google",
+    "target_path": "vendor/google",
+    "branch": "ten"
+    "remote": "gitlab"
+  },
+  {
+    "repository": "nysascape/kernel_google_msm-4.9",
+    "target_path": "kernel/google/msm-4.9",
+    "branch": "ten"
+  },
+  {
+    "repository": "nysascape/vendor_google_extras",
+    "target_path": "vendor/google_extras",
+    "branch": "ten"
+  }
+}
